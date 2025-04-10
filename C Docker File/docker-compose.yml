@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  server:
+    build: .
+    container_name: chat_server
+    command: ./server
+    networks:
+      - chatnet
+    stdin_open: true     # Keep STDIN open
+    tty: true            # Allocate a pseudo-TTY
+
+  client:
+    build: .
+    container_name: chat_client
+    command: ./client
+    depends_on:
+      - server
+    networks:
+      - chatnet
+    stdin_open: true
+    tty: true
+
+networks:
+  chatnet:
